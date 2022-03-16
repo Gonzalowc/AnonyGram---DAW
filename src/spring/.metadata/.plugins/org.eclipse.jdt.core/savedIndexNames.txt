@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+D:\PROGRAMACION\A_PROYECTO_DAW\spring\.metadata\.plugins\org.eclipse.jdt.core
+1233735522.index
