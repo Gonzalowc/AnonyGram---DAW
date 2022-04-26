@@ -42,7 +42,7 @@ testem.log
 Thumbs.db
 
 #()()()()()(Eclipse)()()()()()
-.metadata
+*metadata*
 bin/
 tmp/
 *.tmp
@@ -53,7 +53,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-
+*target
 # External tool builders
 .externalToolBuilders/
 
