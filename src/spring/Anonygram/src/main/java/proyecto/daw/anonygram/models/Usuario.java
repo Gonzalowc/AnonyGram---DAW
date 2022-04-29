@@ -1,49 +1,65 @@
 package proyecto.daw.anonygram.models;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuario")
+@Table(name = "usuario")
 public class Usuario implements Serializable {
 
 	@Id
-	private String id;
-	
-	@Column(nullable=false)
+	private String id_usuario;
+
+	@Column(nullable = false)
 	private String usuario;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
+	private String name;
+
+	@Column(nullable = false)
 	private String rol;
 
-	@Column(nullable=false, columnDefinition="BOOLEAN")
+	@Column(nullable = false, columnDefinition = "BOOLEAN")
 	private boolean activo;
+
+	@OneToMany(mappedBy = "usuarioCreador", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Chat> chatsCreados = new HashSet<>();
+
+	@OneToMany(mappedBy = "usuarioRespuesta", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Chat> chatsRespondidos = new HashSet<>();
+
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Mensaje> mensajes = new HashSet<>();
 
 	public Usuario() {
 	}
 
 	public Usuario(String id, String usuario, String rol, boolean activo) {
 		this(usuario, rol, activo);
-		this.id = id;
+		this.id_usuario = id;
 	}
-	
-	public Usuario( String usuario, String rol, boolean activo) {
+
+	public Usuario(String usuario, String rol, boolean activo) {
 		this.usuario = usuario;
 		this.rol = rol;
 		this.activo = activo;
 	}
 
 	public String getId() {
-		return id;
+		return id_usuario;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this.id_usuario = id;
 	}
 
 	public String getUsuario() {
@@ -52,6 +68,22 @@ public class Usuario implements Serializable {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Set<Mensaje> getMensajes() {
+		return mensajes;
+	}
+
+	public void setMensajes(Set<Mensaje> mensajes) {
+		this.mensajes = mensajes;
 	}
 
 	public String getRol() {
@@ -72,7 +104,7 @@ public class Usuario implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(id_usuario);
 	}
 
 	@Override
@@ -84,14 +116,46 @@ public class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(id_usuario, other.id_usuario);
 	}
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", usuario=" + usuario + ", rol=" + rol + ", activo=" + activo + "]";
+		return "Usuario [id=" + id_usuario + ", usuario=" + usuario + ", rol=" + rol + ", activo=" + activo + "]";
 	}
-	
-	
-	
+
+	// HELPERS
+
+	public void addMessage(Mensaje mensaje) {
+		this.mensajes.add(mensaje);
+		mensaje.setUsuario(this);
+	}
+
+	public void removeMessage(Mensaje mensaje) {
+		this.mensajes.remove(mensaje);
+		mensaje.setUsuario(null);
+	}
+
+	public void addChatCrear(Chat chat, Usuario usuarioRespuesta) {
+		this.chatsCreados.add(chat);
+		chat.setUsuarioCreador(this);
+		addChatResponder(chat, usuarioRespuesta);
+	}
+
+	public void removeChatCrear(Chat chat) {
+		this.chatsCreados.remove(chat);
+		chat.setUsuarioCreador(null);
+		removeChatResponder(chat);
+	}
+
+	private void addChatResponder(Chat chat, Usuario usuarioRespuesta) {
+		this.chatsRespondidos.add(chat);
+		chat.setUsuarioRespuesta(usuarioRespuesta);
+	}
+
+	private void removeChatResponder(Chat chat) {
+		this.chatsRespondidos.remove(chat);
+		chat.setUsuarioRespuesta(null);
+	}
+
 }

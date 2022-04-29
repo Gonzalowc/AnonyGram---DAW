@@ -15,39 +15,39 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="mensaje")
-public class Message implements Serializable{
+@Table(name = "mensaje")
+public class Mensaje implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private BigDecimal id;
-	
-	@Column(nullable=false, name="mensaje")
+	private BigDecimal id_mensaje;
+
+	@Column(nullable = false)
 	private String mensaje;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id", nullable=false)
-	private String usuario;
-	
+	@JoinColumn(name = "id_usuario", nullable = false)
+	private Usuario usuario;
+
 	@ManyToOne
-	@JoinColumn(name="id", nullable=false)
-	private int chat;
-	
-	@Column(nullable=false)
+	@JoinColumn(name = "id_chat", nullable = false)
+	private Chat chat;
+
+	@Column(nullable = false)
 	private Date timestamp;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private boolean active;
-	
-	public Message() {
+
+	public Mensaje() {
 	}
 
-	public Message(BigDecimal id, String message, String usuario, int chat, Date timestamp, boolean active) {
+	public Mensaje(BigDecimal id, String message, Usuario usuario, Chat chat, Date timestamp, boolean active) {
 		this(message, usuario, chat, timestamp, active);
-		this.id = id;
+		this.id_mensaje = id;
 	}
-	
-	public Message( String message, String usuario, int chat, Date timestamp, boolean active) {
+
+	public Mensaje(String message, Usuario usuario, Chat chat, Date timestamp, boolean active) {
 		this.mensaje = message;
 		this.usuario = usuario;
 		this.chat = chat;
@@ -56,7 +56,7 @@ public class Message implements Serializable{
 	}
 
 	public BigDecimal getId() {
-		return id;
+		return id_mensaje;
 	}
 
 	public String getMessage() {
@@ -67,19 +67,19 @@ public class Message implements Serializable{
 		this.mensaje = message;
 	}
 
-	public String getUsuario() {
+	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(String usuario) {
+	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
 
-	public int getChat() {
+	public Chat getChat() {
 		return chat;
 	}
 
-	public void setChat(int chat) {
+	public void setChat(Chat chat) {
 		this.chat = chat;
 	}
 
@@ -101,7 +101,7 @@ public class Message implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(id_mensaje);
 	}
 
 	@Override
@@ -112,13 +112,13 @@ public class Message implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Message other = (Message) obj;
-		return Objects.equals(id, other.id);
+		Mensaje other = (Mensaje) obj;
+		return Objects.equals(id_mensaje, other.id_mensaje);
 	}
 
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", mensaje=" + mensaje + ", usuario=" + usuario + ", chat=" + chat + ", timestamp="
+		return "Message [id=" + id_mensaje + ", mensaje=" + mensaje + ", usuario=" + usuario + ", chat=" + chat + ", timestamp="
 				+ timestamp + ", active=" + active + "]";
 	}
-} 
+}

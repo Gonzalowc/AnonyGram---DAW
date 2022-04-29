@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 import proyecto.daw.anonygram.models.Usuario;
 import proyecto.daw.anonygram.repository.UsuarioRepository;
 
-@Service
-public class JPAUserDetailsService implements UserDetailsService{
-	@Autowired
+//@Service
+public class JPAUserDetailsService /*implements UserDetailsService*/{
+	
+	/*@Autowired
 	UsuarioRepository usuarioRepository;
 	
 	@Override
@@ -30,6 +31,6 @@ public class JPAUserDetailsService implements UserDetailsService{
 		JPAUserDetails userDetails = new JPAUserDetails(user);
 		return userDetails;
 		
-	}
+	}*/
 
 }

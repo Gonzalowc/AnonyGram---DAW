@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import proyecto.daw.anonygram.models.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, String> {
 
 	public Usuario findByUsuario(String usuario);
 

@@ -23,8 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	/* Obtengo una refencia al SINGLENTON del userDetailsService	 * 
 	 */
-	@Autowired
-	JPAUserDetailsService userDetailsService;
+//	@Autowired
+//	JPAUserDetailsService userDetailsService;
 	
 	/* MÉTODO PARA AUTENTIFICAR LOS USUARIOS */
 	@Override
@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 		//La autentificación JPA no está incluido tenemos que configurarla nosotros
 		//Creando nuestro propio servicio que nos permita obtener la información del usuario
-		auth.userDetailsService(userDetailsService);
+//		auth.userDetailsService(userDetailsService);
 	}
 
 	/*
@@ -44,13 +44,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		/* URL con información sobre ANT MATCHERS
 		 * https://www.baeldung.com/spring-security-expressions */
 		http.authorizeRequests()
-		.antMatchers("/").permitAll()
+		.antMatchers("/").permitAll();
 //		.antMatchers("").authenticated()
 //		.antMatchers("").hasRole("ADMIN")
 //		.antMatchers("").hasRole("USER")
 //		.antMatchers("").not().authenticated()
-		.and()
-		.formLogin();			
+//		.and()
+//		.formLogin();			
 	}
 	
 	/*

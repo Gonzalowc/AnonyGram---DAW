@@ -8,7 +8,7 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<relativePath />
 		<!-- lookup parent from repository -->
 	</parent>
-	<groupId>proyecto.daw</groupId>
+	<groupId>proyecto.daw.anonygram</groupId>
 	<artifactId>anonygram</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>AnonyGram</name>
