@@ -1,0 +1,19 @@
+.chat {
+  position: static;
+  width: 35%;
+  height: 35px;
+  background-color: blue;
+  left: 2px;
+  top: 1062px;
+  /* Inside auto layout */
+  flex: none;
+  order: 10;
+  align-self: stretch;
+  flex-grow: 0;
+  margin: 10px 0px;
+}
+.mensajes {
+  width: 100%;
+  height: 100%;
+  background-color: green !important;
+}
