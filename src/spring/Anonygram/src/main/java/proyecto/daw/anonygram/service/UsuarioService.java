@@ -4,5 +4,5 @@ import proyecto.daw.anonygram.models.Usuario;
 
 public interface UsuarioService {
 
-	public Usuario findByUsuario(String usuario);
+	public Usuario findByUsuario(Long usuario);
 }

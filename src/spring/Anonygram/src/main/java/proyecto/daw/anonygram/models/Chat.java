@@ -24,21 +24,27 @@ public class Chat implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private BigDecimal id_chat;
+	private Long id_chat;
 
 	@ManyToOne
-	@JoinColumn(name = "id_usuarioCreador", nullable = false)
+	@JoinColumn(name = "idUsuarioCreador", nullable = false)
 	private Usuario usuarioCreador;
 
 	@ManyToOne
-	@JoinColumn(name = "id_usuarioRespuesta", nullable = false)
+	@JoinColumn(name = "idUsuarioRespuesta", nullable = false)
 	private Usuario usuarioRespuesta;
 
 	@Column(nullable = false)
 	private Date fechaCreacion;
 
 	@Column(nullable = false, columnDefinition = "BOOLEAN")
-	private boolean activo;
+	private boolean activo = true;
+	
+	@Column(nullable = false)
+	private String nombreChatCreador;
+	
+	@Column(nullable = false)
+	private String nombreChatRespuesta;
 
 	@OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Mensaje> mensajes = new HashSet<>();
@@ -46,19 +52,21 @@ public class Chat implements Serializable {
 	public Chat() {
 	}
 
-	public Chat(BigDecimal id, Usuario usuarioCreador, Usuario usuarioRespuesta, Date fechaCreacion, boolean activo) {
-		this(usuarioCreador, usuarioRespuesta, fechaCreacion, activo);
+	public Chat(Long id, Usuario usuarioCreador, Usuario usuarioRespuesta,String nombreChat, Date fechaCreacion, boolean activo) {
+		this(usuarioCreador, usuarioRespuesta, fechaCreacion, activo, nombreChat);
 		this.id_chat = id;
 	}
 
-	public Chat(Usuario usuarioCreador, Usuario usuarioRespuesta, Date fechaCreacion, boolean activo) {
+	public Chat(Usuario usuarioCreador, Usuario usuarioRespuesta, Date fechaCreacion, boolean activo, String nombreChat) {
 		this.usuarioCreador = usuarioCreador;
 		this.usuarioRespuesta = usuarioRespuesta;
 		this.fechaCreacion = fechaCreacion;
 		this.activo = activo;
+		this.nombreChatCreador = nombreChat;
+		this.nombreChatRespuesta = nombreChat;
 	}
 
-	public BigDecimal getId() {
+	public Long getId() {
 		return id_chat;
 	}
 
@@ -92,6 +100,24 @@ public class Chat implements Serializable {
 
 	public void setActivo(boolean activo) {
 		this.activo = activo;
+	}
+	
+	
+
+	public String getNombreChatCreador() {
+		return nombreChatCreador;
+	}
+
+	public void setNombreChatCreador(String nombreChatCreador) {
+		this.nombreChatCreador = nombreChatCreador;
+	}
+
+	public String getNombreChatRespuesta() {
+		return nombreChatRespuesta;
+	}
+
+	public void setNombreChatRespuesta(String nombreChatRespuesta) {
+		this.nombreChatRespuesta = nombreChatRespuesta;
 	}
 
 	@Override

@@ -9,6 +9,6 @@ import proyecto.daw.anonygram.service.ChatService;
 @Service
 public class ChatServiceImp implements ChatService {
 
-	@Autowired
-	ChatRepository chatRepo;
+//	@Autowired
+//	ChatRepository chatRepo;
 }

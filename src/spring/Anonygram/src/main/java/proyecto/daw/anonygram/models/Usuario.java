@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,19 +19,23 @@ import javax.persistence.Table;
 public class Usuario implements Serializable {
 
 	@Id
-	private String id_usuario;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id_usuario;
 
 	@Column(nullable = false)
 	private String usuario;
 
 	@Column(nullable = false)
 	private String name;
+	
+	@Column(nullable = false)
+	private String password;
 
 	@Column(nullable = false)
 	private String rol;
 
 	@Column(nullable = false, columnDefinition = "BOOLEAN")
-	private boolean activo;
+	private boolean activo = true;
 
 	@OneToMany(mappedBy = "usuarioCreador", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Chat> chatsCreados = new HashSet<>();
@@ -43,7 +49,7 @@ public class Usuario implements Serializable {
 	public Usuario() {
 	}
 
-	public Usuario(String id, String usuario, String rol, boolean activo) {
+	public Usuario(Long id, String usuario, String rol, boolean activo) {
 		this(usuario, rol, activo);
 		this.id_usuario = id;
 	}
@@ -54,12 +60,8 @@ public class Usuario implements Serializable {
 		this.activo = activo;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id_usuario;
-	}
-
-	public void setId(String id) {
-		this.id_usuario = id;
 	}
 
 	public String getUsuario() {

@@ -11,12 +11,13 @@ public class AnonyGramApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AnonyGramApplication.class, args);
 	}
-	
-	//BEAN PARA HABILITAR i18n
-			@Bean
-			public MessageSource messageSource() {
-				ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-				messageSource.setBasename("locale/messages");
-				return messageSource;
-			}
+
+	// BEAN PARA HABILITAR i18n
+	@Bean
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasename("locale/messages");
+		return messageSource;
+	}
+
 }

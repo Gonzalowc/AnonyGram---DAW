@@ -3,11 +3,11 @@ package proyecto.daw.anonygram.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import proyecto.daw.anonygram.models.Chat;
+import proyecto.daw.anonygram.models.Mensaje;
 import proyecto.daw.anonygram.models.Usuario;
 
 @Repository
-public interface ChatRepository extends JpaRepository<Chat, Long>{
+public interface MensajeRepository extends JpaRepository<Mensaje, Long>{
 
-	public Chat findByUsuarioCreador(Usuario usuarioCreador);
+	public Mensaje findByUsuario(Usuario Usuario);
 }

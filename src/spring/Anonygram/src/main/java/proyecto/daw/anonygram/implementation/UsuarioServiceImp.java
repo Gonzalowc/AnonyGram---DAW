@@ -14,7 +14,7 @@ public class UsuarioServiceImp implements UsuarioService{
 	UsuarioRepository usuarioRepo;
 
 	@Override
-	public Usuario findByUsuario(String usuario) {
+	public Usuario findByUsuario(Long usuario) {
 		return null;
 	}
 	

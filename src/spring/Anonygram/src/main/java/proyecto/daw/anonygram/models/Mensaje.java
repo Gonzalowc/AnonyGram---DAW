@@ -1,9 +1,9 @@
 package proyecto.daw.anonygram.models;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Observable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,33 +16,33 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mensaje")
-public class Mensaje implements Serializable {
+public class Mensaje extends Observable implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private BigDecimal id_mensaje;
+	private Long id_mensaje;
 
 	@Column(nullable = false)
 	private String mensaje;
 
 	@ManyToOne
-	@JoinColumn(name = "id_usuario", nullable = false)
+	@JoinColumn(name = "idUsuario", nullable = false)
 	private Usuario usuario;
 
 	@ManyToOne
-	@JoinColumn(name = "id_chat", nullable = false)
+	@JoinColumn(name = "idChat", nullable = false)
 	private Chat chat;
 
 	@Column(nullable = false)
 	private Date timestamp;
 
-	@Column(nullable = false)
-	private boolean active;
+	@Column(nullable = false, columnDefinition = "BOOLEAN")
+	private boolean active = true;
 
 	public Mensaje() {
 	}
 
-	public Mensaje(BigDecimal id, String message, Usuario usuario, Chat chat, Date timestamp, boolean active) {
+	public Mensaje(Long id, String message, Usuario usuario, Chat chat, Date timestamp, boolean active) {
 		this(message, usuario, chat, timestamp, active);
 		this.id_mensaje = id;
 	}
@@ -53,9 +53,11 @@ public class Mensaje implements Serializable {
 		this.chat = chat;
 		this.timestamp = timestamp;
 		this.active = active;
+		this.setChanged();
+		this.notifyObservers(this.getMessage());
 	}
 
-	public BigDecimal getId() {
+	public Long getId() {
 		return id_mensaje;
 	}
 
