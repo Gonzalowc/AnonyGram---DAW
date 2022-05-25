@@ -1,7 +1,7 @@
 package proyecto.daw.anonygram.models;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -20,139 +20,175 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "chat")
-public class Chat implements Serializable {
+public class Chat implements Serializable{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_chat;
+    private static final long serialVersionUID = 6198995106942182276L;
 
-	@ManyToOne
-	@JoinColumn(name = "idUsuarioCreador", nullable = false)
-	private Usuario usuarioCreador;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_chat;
 
-	@ManyToOne
-	@JoinColumn(name = "idUsuarioRespuesta", nullable = false)
-	private Usuario usuarioRespuesta;
+    @ManyToOne
+    @JoinColumn(name = "idUsuarioCreador", nullable = false)
+    private Usuario usuarioCreador;
 
-	@Column(nullable = false)
-	private Date fechaCreacion;
+    @ManyToOne
+    @JoinColumn(name = "idUsuarioRespuesta", nullable = false)
+    private Usuario usuarioRespuesta;
 
-	@Column(nullable = false, columnDefinition = "BOOLEAN")
-	private boolean activo = true;
-	
-	@Column(nullable = false)
-	private String nombreChatCreador;
-	
-	@Column(nullable = false)
-	private String nombreChatRespuesta;
+    @Column(nullable = false)
+    private Date fechaCreacion;
 
-	@OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Mensaje> mensajes = new HashSet<>();
+    @Column(nullable = false, columnDefinition = "BOOLEAN")
+    private boolean activo = true;
 
-	public Chat() {
-	}
+    @Column(nullable = true)
+    private String nombreChatCreador;
 
-	public Chat(Long id, Usuario usuarioCreador, Usuario usuarioRespuesta,String nombreChat, Date fechaCreacion, boolean activo) {
-		this(usuarioCreador, usuarioRespuesta, fechaCreacion, activo, nombreChat);
-		this.id_chat = id;
-	}
+    @Column(nullable = true)
+    private String nombreChatRespuesta;
 
-	public Chat(Usuario usuarioCreador, Usuario usuarioRespuesta, Date fechaCreacion, boolean activo, String nombreChat) {
-		this.usuarioCreador = usuarioCreador;
-		this.usuarioRespuesta = usuarioRespuesta;
-		this.fechaCreacion = fechaCreacion;
-		this.activo = activo;
-		this.nombreChatCreador = nombreChat;
-		this.nombreChatRespuesta = nombreChat;
-	}
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Mensaje> mensajes = new HashSet<>();
+    
+    @Column(nullable = false)
+    private Blob imagen;
 
-	public Long getId() {
-		return id_chat;
-	}
+    public Chat() {
+    }
 
-	public Usuario getUsuarioCreador() {
-		return usuarioCreador;
-	}
+    public Chat(
+        Long id,
+        Usuario usuarioCreador,
+        Usuario usuarioRespuesta,
+        String nombreChat,
+        Date fechaCreacion,
+        boolean activo) {
+        this(usuarioCreador, usuarioRespuesta, fechaCreacion, activo, nombreChat);
+        this.id_chat = id;
+    }
 
-	public void setUsuarioCreador(Usuario usuarioCreador) {
-		this.usuarioCreador = usuarioCreador;
-	}
+    public Chat(
+        Usuario usuarioCreador,
+        Usuario usuarioRespuesta,
+        Date fechaCreacion,
+        boolean activo,
+        String nombreChat) {
+        this.usuarioCreador = usuarioCreador;
+        this.usuarioRespuesta = usuarioRespuesta;
+        this.fechaCreacion = fechaCreacion;
+        this.activo = activo;
+        this.nombreChatCreador = nombreChat;
+        this.nombreChatRespuesta = nombreChat;
+    }
 
-	public Usuario getUsuarioRespuesta() {
-		return usuarioRespuesta;
-	}
+    public Long getId() {
+        return id_chat;
+    }
 
-	public void setUsuarioRespuesta(Usuario usuarioRespuesta) {
-		this.usuarioRespuesta = usuarioRespuesta;
-	}
+    public Usuario getUsuarioCreador() {
+        return usuarioCreador;
+    }
 
-	public Date getFechaCreacion() {
-		return fechaCreacion;
-	}
+    public void setUsuarioCreador(Usuario usuarioCreador) {
+        this.usuarioCreador = usuarioCreador;
+    }
 
-	public void setFechaCreacion(Date fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
+    public Usuario getUsuarioRespuesta() {
+        return usuarioRespuesta;
+    }
 
-	public boolean isActivo() {
-		return activo;
-	}
+    public void setUsuarioRespuesta(Usuario usuarioRespuesta) {
+        this.usuarioRespuesta = usuarioRespuesta;
+    }
 
-	public void setActivo(boolean activo) {
-		this.activo = activo;
-	}
-	
-	
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
 
-	public String getNombreChatCreador() {
-		return nombreChatCreador;
-	}
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 
-	public void setNombreChatCreador(String nombreChatCreador) {
-		this.nombreChatCreador = nombreChatCreador;
-	}
+    public boolean isActivo() {
+        return activo;
+    }
 
-	public String getNombreChatRespuesta() {
-		return nombreChatRespuesta;
-	}
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 
-	public void setNombreChatRespuesta(String nombreChatRespuesta) {
-		this.nombreChatRespuesta = nombreChatRespuesta;
-	}
+    public String getNombreChatCreador() {
+        return nombreChatCreador;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(activo, usuarioCreador, usuarioRespuesta);
-	}
+    public void setNombreChatCreador(String nombreChatCreador) {
+        this.nombreChatCreador = nombreChatCreador;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Chat other = (Chat) obj;
-		return activo == other.activo && Objects.equals(usuarioCreador, other.usuarioCreador)
-				&& Objects.equals(usuarioRespuesta, other.usuarioRespuesta);
-	}
+    public String getNombreChatRespuesta() {
+        return nombreChatRespuesta;
+    }
 
-	@Override
-	public String toString() {
-		return "Chat [id=" + id_chat + ", usuarioCreador=" + usuarioCreador + ", usuarioRespuesta=" + usuarioRespuesta
-				+ ", fechaCreacion=" + fechaCreacion + ", activo=" + activo + "]";
-	}
+    public void setNombreChatRespuesta(String nombreChatRespuesta) {
+        this.nombreChatRespuesta = nombreChatRespuesta;
+    }
+    
+    public Set<Mensaje> getMensajes() {
+        return mensajes;
+    }
 
-	// HELPERS
-	public void addMessage(Mensaje mensaje) {
-		this.mensajes.add(mensaje);
-		mensaje.setChat(this);
-	}
+    
+    public void setMensajes(Set<Mensaje> mensajes) {
+        this.mensajes = mensajes;
+    }
 
-	public void removeMessage(Mensaje mensaje) {
-		this.mensajes.remove(mensaje);
-		mensaje.setChat(null);
-	}
+    
+    public Blob getImagen() {
+        return imagen;
+    }
 
+    
+    public void setImagen(Blob imagen) {
+        this.imagen = imagen;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(activo, usuarioCreador, usuarioRespuesta);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Chat other = (Chat) obj;
+        return activo == other.activo && Objects.equals(usuarioCreador, other.usuarioCreador)
+            && Objects.equals(usuarioRespuesta, other.usuarioRespuesta);
+    }
+
+    @Override
+    public String toString() {
+        return "Chat [id=" + id_chat + ", usuarioCreador=" + usuarioCreador + ", usuarioRespuesta="
+            + usuarioRespuesta + ", fechaCreacion=" + fechaCreacion + ", activo=" + activo + "]";
+    }
+
+    // HELPERS
+    public void addMessage(Mensaje mensaje) {
+        this.mensajes.add(mensaje);
+        mensaje.setChat(this);
+    }
+
+    public void removeMessage(Mensaje mensaje) {
+        this.mensajes.remove(mensaje);
+        mensaje.setChat(null);
+    }
+
+   
+    
+    
 }

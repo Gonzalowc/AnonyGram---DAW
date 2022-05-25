@@ -3,7 +3,6 @@ package proyecto.daw.anonygram.models;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Observable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,111 +15,127 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mensaje")
-public class Mensaje extends Observable implements Serializable {
+public class Mensaje implements Serializable,Comparable<Mensaje> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id_mensaje;
+    private static final long serialVersionUID = 904186107637100858L;
 
-	@Column(nullable = false)
-	private String mensaje;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_mensaje;
 
-	@ManyToOne
-	@JoinColumn(name = "idUsuario", nullable = false)
-	private Usuario usuario;
+    @Column(nullable = false)
+    private String mensaje;
 
-	@ManyToOne
-	@JoinColumn(name = "idChat", nullable = false)
-	private Chat chat;
+    @ManyToOne
+    @JoinColumn(name = "idUsuario", nullable = false)
+    private Usuario usuario;
 
-	@Column(nullable = false)
-	private Date timestamp;
+    @ManyToOne
+    @JoinColumn(name = "idChat", nullable = false)
+    private Chat chat;
 
-	@Column(nullable = false, columnDefinition = "BOOLEAN")
-	private boolean active = true;
+    @Column(nullable = false)
+    private Date timestamp;
 
-	public Mensaje() {
-	}
+    @Column(nullable = false, columnDefinition = "BOOLEAN")
+    private boolean active = true;
 
-	public Mensaje(Long id, String message, Usuario usuario, Chat chat, Date timestamp, boolean active) {
-		this(message, usuario, chat, timestamp, active);
-		this.id_mensaje = id;
-	}
+    public Mensaje() {
+    }
 
-	public Mensaje(String message, Usuario usuario, Chat chat, Date timestamp, boolean active) {
-		this.mensaje = message;
-		this.usuario = usuario;
-		this.chat = chat;
-		this.timestamp = timestamp;
-		this.active = active;
-		this.setChanged();
-		this.notifyObservers(this.getMessage());
-	}
+    public Mensaje(
+        Long id,
+        String message,
+        Usuario usuario,
+        Chat chat,
+        Date timestamp,
+        boolean active) {
+        this(message, usuario, chat, timestamp, active);
+        this.id_mensaje = id;
+    }
 
-	public Long getId() {
-		return id_mensaje;
-	}
+    public Mensaje(
+        String message,
+        Usuario usuario,
+        Chat chat,
+        Date timestamp,
+        boolean active) {
+        this.mensaje = message;
+        this.usuario = usuario;
+        this.chat = chat;
+        this.timestamp = timestamp;
+        this.active = active;
+    }
 
-	public String getMessage() {
-		return mensaje;
-	}
+    public Long getId() {
+        return id_mensaje;
+    }
 
-	public void setMessage(String message) {
-		this.mensaje = message;
-	}
+    public String getMessage() {
+        return mensaje;
+    }
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
+    public void setMessage(String message) {
+        this.mensaje = message;
+    }
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-	public Chat getChat() {
-		return chat;
-	}
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
-	public void setChat(Chat chat) {
-		this.chat = chat;
-	}
+    public Chat getChat() {
+        return chat;
+    }
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
+    public Date getTimestamp() {
+        return timestamp;
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+    public boolean isActive() {
+        return active;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id_mensaje);
-	}
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Mensaje other = (Mensaje) obj;
-		return Objects.equals(id_mensaje, other.id_mensaje);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_mensaje);
+    }
 
-	@Override
-	public String toString() {
-		return "Message [id=" + id_mensaje + ", mensaje=" + mensaje + ", usuario=" + usuario + ", chat=" + chat + ", timestamp="
-				+ timestamp + ", active=" + active + "]";
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Mensaje other = (Mensaje) obj;
+        return Objects.equals(id_mensaje, other.id_mensaje);
+    }
+
+    @Override
+    public String toString() {
+        return "Message [id=" + id_mensaje + ", mensaje=" + mensaje + ", usuario=" + usuario + ", chat=" + chat
+            + ", timestamp=" + timestamp + ", active=" + active + "]";
+    }
+
+    @Override
+    public int compareTo(Mensaje o) {
+        return o.getTimestamp().compareTo(this.timestamp);
+    }
 }

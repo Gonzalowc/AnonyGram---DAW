@@ -7,7 +7,9 @@ import proyecto.daw.anonygram.models.Chat;
 import proyecto.daw.anonygram.models.Usuario;
 
 @Repository
-public interface ChatRepository extends JpaRepository<Chat, Long>{
+public interface ChatRepository extends JpaRepository<Chat, Long> {
 
-	public Chat findByUsuarioCreador(Usuario usuarioCreador);
+    public Chat findByUsuarioCreadorAndUsuarioRespuesta(Usuario usuarioCreador, Usuario usuarioRespuesta);
+
+    public Chat findByUsuarioCreador(Usuario usuarioCreador);
 }

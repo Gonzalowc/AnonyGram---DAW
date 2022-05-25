@@ -12,52 +12,57 @@ import proyecto.daw.anonygram.models.Usuario;
 
 public class JPAUserDetails implements UserDetails {
 
-	private String usuario;
-	private String password;
-	private boolean activo;
-	private List<GrantedAuthority> authorities;
+    private static final long serialVersionUID = 7253791946163593096L;
 
-	public JPAUserDetails(Usuario usuario) {
+    private String usuario;
 
-		this.authorities = new ArrayList<>();
-		this.authorities.add(new SimpleGrantedAuthority(usuario.getRol()));
+    private String password;
 
-	}
+    private boolean activo;
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
+    private List<GrantedAuthority> authorities;
 
-		return this.authorities;
-	}
+    public JPAUserDetails(
+        Usuario usuario) {
+        this.usuario = usuario.getUsuario();
+        this.password = usuario.getPassword();
+        this.activo = usuario.isActivo();
+        this.authorities = new ArrayList<>();
+        this.authorities.add(new SimpleGrantedAuthority(usuario.getRol()));
+    }
 
-	@Override
-	public String getPassword() {
-		return this.password;
-	}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
 
-	@Override
-	public String getUsername() {
-		return this.usuario;
-	}
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    @Override
+    public String getUsername() {
+        return this.usuario;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return this.activo;
-	}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
+    @Override
+    public boolean isEnabled() {
+        return this.activo;
+    }
 }
