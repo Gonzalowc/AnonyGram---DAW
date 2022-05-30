@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,19 +47,22 @@ public class WebController {
         if (isObjectJSONgoodFormat(mensajeObject)) {
             Long idUsuario = mensajeObject.getLong("id_usuario");
             Long idChat = mensajeObject.getLong("id_chat");
-            Usuario usuario = getUsuario(idUsuario);
-            Chat chat = getChat(idChat);
-            MensajeResponse response = new MensajeResponse(mensajeObject.getString("mensaje"), idUsuario,
-                idChat, mensajeObject.getString("timestamp"), mensajeObject.getBoolean("active"));
-            System.out.println(new Date());
-            Mensaje mensajeDB = new Mensaje(response.getMessage(), usuario, chat, new Date(),
-                response.isActive());
-            System.out.println("Mensaje creado");
-            if (usuario != null && chat != null) {
-                System.out.println("Mensaje enviado a insertar");
-                mensajeSevice.insertMensaje(mensajeDB);
+            String mensajeRequest = mensajeObject.getString("mensaje");
+            if (idChat != null && idUsuario != null && !mensajeRequest.equals("")) {
+                Usuario usuario = getUsuario(idUsuario);
+                Chat chat = getChat(idChat);
+                if (chat != null && usuario != null) {
+                    MensajeResponse response = new MensajeResponse(mensajeRequest, idUsuario, idChat,
+                        mensajeObject.getString("timestamp"), mensajeObject.getBoolean("active"));
+                    System.out.println(new Date());
+                    Mensaje mensajeDB = new Mensaje(response.getMensaje(), usuario, chat, new Date(),
+                        response.isActive());
+                    System.out.println("Mensaje creado");
+                    System.out.println("Mensaje enviado a insertar");
+                    mensajeSevice.insertMensaje(mensajeDB);
+                    return response;
+                }
             }
-            return response;
         }
         return null;
     }
@@ -67,7 +72,11 @@ public class WebController {
     }
 
     private Chat getChat(Long idChat) {
-        return idChat != null ? chatService.findByIdChat(idChat) : null;
+        try {
+            return idChat != null ? chatService.findByIdChat(idChat) : null;
+        } catch (EntityNotFoundException e) {
+            return null;
+        }
     }
 
     private boolean isObjectJSONgoodFormat(JSONObject mensaje) {
@@ -93,35 +102,25 @@ public class WebController {
             System.out.println(idUsuario);
             Usuario usuario = getUsuario(idUsuario);
             System.out.println(usuario);
-            System.out.println("modificar usuario...");
             usuario.setActiveNewChat(true);
             List<Usuario> posibleNuevoChat = haveNewPeopeToChat(usuario);
             if (posibleNuevoChat.size() > 0) {
                 int index = AnonygramUtils.getRandomIndex(posibleNuevoChat.size());
-                System.out.println("Crear chat...");
                 Chat chat = new Chat();
                 String randomizedString = RandomStringUtils.randomAlphanumeric(8);
                 chat.setNombreChatRespuesta(randomizedString);
                 chat.setNombreChatCreador(randomizedString);
                 chat.setFechaCreacion(new Date());
                 usuario.addChatCrear(chat, posibleNuevoChat.get(index));
-                System.out.println("actualizando usuario...");
                 if (usuarioService.updateUsuario(usuario) != null) {
-                    System.out.println("usuario modificado...");
-                    ChatResponse chatResponse = new ChatResponse();
                     chat = chatService.findByUsuarioCreadorAndUsuarioRespuesta(usuario,
                         posibleNuevoChat.get(index));
-                    System.out.println("Creando respuesta...");
-                    chatResponse.setId_chat(chat.getId());
-                    chatResponse.setFecha_creacion(chat.getFechaCreacion().toString());
-                    chatResponse.setNombre_chat_creador(chat.getNombreChatCreador());
-                    chatResponse.setNombre_chat_respuesta(chat.getNombreChatRespuesta());
-                    chatResponse.setId_usuario_creador(chat.getUsuarioCreador().getId());
-                    chatResponse.setId_usuario_respuesta(chat.getUsuarioRespuesta().getId());
-                    System.out.println("Respuesta Creada.");
+                    ChatResponse chatResponse = new ChatResponse(chat);
                     updateUsersNoNewChat(usuario, posibleNuevoChat.get(index));
                     return chatResponse;
                 }
+            } else {
+                usuarioService.updateUsuario(usuario);
             }
         } catch (JSONException e) {
             return null;

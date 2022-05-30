@@ -4,9 +4,9 @@ public class MensajeResponse {
 
     private String mensaje;
 
-    private Long usuario;
+    private Long id_usuario;
 
-    private Long chat;
+    private Long id_chat;
 
     private String timestamp;
 
@@ -16,40 +16,40 @@ public class MensajeResponse {
     }
 
     public MensajeResponse(
-        String message,
-        Long usuario,
-        Long chat,
+        String mensaje,
+        Long id_usuario,
+        Long id_chat,
         String timestamp,
         boolean active) {
-        this.mensaje = message;
-        this.usuario = usuario;
-        this.chat = chat;
+        this.mensaje = mensaje;
+        this.id_usuario = id_usuario;
+        this.id_chat = id_chat;
         this.timestamp = timestamp;
         this.active = active;
     }
 
-    public String getMessage() {
+    public String getMensaje() {
         return mensaje;
     }
 
-    public void setMessage(String message) {
-        this.mensaje = message;
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
-    public Long getUsuario() {
-        return usuario;
+    public Long getId_usuario() {
+        return id_usuario;
     }
 
-    public void setUsuario(Long usuario) {
-        this.usuario = usuario;
+    public void setId_usuario(Long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public Long getChat() {
-        return chat;
+    public Long getId_chat() {
+        return id_chat;
     }
 
-    public void setChat(Long chat) {
-        this.chat = chat;
+    public void setId_chat(Long id_chat) {
+        this.id_chat = id_chat;
     }
 
     public String getTimestamp() {
@@ -66,11 +66,5 @@ public class MensajeResponse {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    @Override
-    public String toString() {
-        return "MensajeResponse [mensaje=" + mensaje + ", usuario=" + usuario + ", chat=" + chat
-            + ", timestamp=" + timestamp + ", active=" + active + "]";
     }
 }

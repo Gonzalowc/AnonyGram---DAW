@@ -35,6 +35,7 @@ public class UsuarioController {
             response.setActivo(usuario.isActivo());
             response.setName(usuario.getName());
             response.setRol(usuario.getRol());
+            response.setActive_new_chat(usuario.isActiveNewChat());
             return response;
         }
         return null;

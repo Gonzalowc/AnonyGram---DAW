@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
          * expressions
          */
         http.csrf().disable().authorizeRequests()
-            .antMatchers("/usuario/**", "/gkz-stomp-endpoint/**", "/chat/**").not().authenticated().anyRequest()
+            .antMatchers("/usuario/**", "/gkz-stomp-endpoint/**", "/chat/**","/mensaje/**").not().authenticated().anyRequest()
             .authenticated().and().httpBasic();
     }
 

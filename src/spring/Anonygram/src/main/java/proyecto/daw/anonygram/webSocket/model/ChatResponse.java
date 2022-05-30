@@ -1,20 +1,26 @@
 package proyecto.daw.anonygram.webSocket.model;
 
 import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.Date;
 
+import proyecto.daw.anonygram.models.Chat;
+import proyecto.daw.anonygram.models.Mensaje;
+
+// TODO: Auto-generated Javadoc
 /**
  * The Class ChatResponse.
  *
  * @author Gonzalo Waack Carneado
  */
-public class ChatResponse implements Comparable<ChatResponse>{
+public class ChatResponse implements Comparable<ChatResponse> {
 
     /** The id chat. */
     private Long id_chat;
 
     /** The fecha creacion. */
     private String fecha_creacion;
-    
+
     /** The fecha ultimo mensaje. */
     private String fecha_ultimo_mensaje;
 
@@ -33,10 +39,31 @@ public class ChatResponse implements Comparable<ChatResponse>{
     /** The imagen. */
     private Blob imagen;
 
+    /** The ultimo ensaje. */
+    private String ultimo_mensaje;
+
     /**
      * Instantiates a new chat response.
      */
     public ChatResponse() {
+    }
+
+    /**
+     * Instantiates a new chat response.
+     *
+     * @param chat
+     *            the chat
+     */
+    public ChatResponse(
+        Chat chat) {
+        this.id_chat = chat.getId();
+        this.fecha_creacion = chat.getFechaCreacion().toString();
+        this.fecha_ultimo_mensaje = chat.getMensajes().size() > 0 ? new ArrayList<Mensaje>(chat.getMensajes())
+            .get(chat.getMensajes().size() - 1).getTimestamp().toString() : new Date().toString();
+        this.nombre_chat_creador = chat.getNombreChatCreador();
+        this.nombre_chat_respuesta = chat.getNombreChatRespuesta();
+        this.id_usuario_creador = chat.getUsuarioCreador().getId();
+        this.id_usuario_respuesta = chat.getUsuarioRespuesta().getId();
     }
 
     /**
@@ -51,7 +78,8 @@ public class ChatResponse implements Comparable<ChatResponse>{
     /**
      * Sets the id chat.
      *
-     * @param id_chat the new id chat
+     * @param id_chat
+     *            the new id chat
      */
     public void setId_chat(Long id_chat) {
         this.id_chat = id_chat;
@@ -69,7 +97,8 @@ public class ChatResponse implements Comparable<ChatResponse>{
     /**
      * Sets the fecha creacion.
      *
-     * @param fecha_creacion the new fecha creacion
+     * @param fecha_creacion
+     *            the new fecha creacion
      */
     public void setFecha_creacion(String fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
@@ -84,7 +113,6 @@ public class ChatResponse implements Comparable<ChatResponse>{
         return nombre_chat_creador;
     }
 
-    
     /**
      * Gets the fecha ultimo mensaje.
      *
@@ -94,11 +122,11 @@ public class ChatResponse implements Comparable<ChatResponse>{
         return fecha_ultimo_mensaje;
     }
 
-    
     /**
      * Sets the fecha ultimo mensaje.
      *
-     * @param fecha_ultimo_mensaje the new fecha ultimo mensaje
+     * @param fecha_ultimo_mensaje
+     *            the new fecha ultimo mensaje
      */
     public void setFecha_ultimo_mensaje(String fecha_ultimo_mensaje) {
         this.fecha_ultimo_mensaje = fecha_ultimo_mensaje;
@@ -107,7 +135,8 @@ public class ChatResponse implements Comparable<ChatResponse>{
     /**
      * Sets the nombre chat creador.
      *
-     * @param nombre_chat_creador the new nombre chat creador
+     * @param nombre_chat_creador
+     *            the new nombre chat creador
      */
     public void setNombre_chat_creador(String nombre_chat_creador) {
         this.nombre_chat_creador = nombre_chat_creador;
@@ -125,7 +154,8 @@ public class ChatResponse implements Comparable<ChatResponse>{
     /**
      * Sets the nombre chat respuesta.
      *
-     * @param nombre_chat_respuesta the new nombre chat respuesta
+     * @param nombre_chat_respuesta
+     *            the new nombre chat respuesta
      */
     public void setNombre_chat_respuesta(String nombre_chat_respuesta) {
         this.nombre_chat_respuesta = nombre_chat_respuesta;
@@ -143,7 +173,8 @@ public class ChatResponse implements Comparable<ChatResponse>{
     /**
      * Sets the id usuario creador.
      *
-     * @param id_usuario_creador the new id usuario creador
+     * @param id_usuario_creador
+     *            the new id usuario creador
      */
     public void setId_usuario_creador(Long id_usuario_creador) {
         this.id_usuario_creador = id_usuario_creador;
@@ -161,7 +192,8 @@ public class ChatResponse implements Comparable<ChatResponse>{
     /**
      * Sets the id usuario respuesta.
      *
-     * @param id_usuario_respuesta the new id usuario respuesta
+     * @param id_usuario_respuesta
+     *            the new id usuario respuesta
      */
     public void setId_usuario_respuesta(Long id_usuario_respuesta) {
         this.id_usuario_respuesta = id_usuario_respuesta;
@@ -179,12 +211,39 @@ public class ChatResponse implements Comparable<ChatResponse>{
     /**
      * Sets the imagen.
      *
-     * @param blob the new imagen
+     * @param blob
+     *            the new imagen
      */
     public void setImagen(Blob blob) {
         this.imagen = blob;
     }
 
+    /**
+     * Gets the ultimo ensaje.
+     *
+     * @return the ultimo ensaje
+     */
+    public String getUltimo_mensaje() {
+        return ultimo_mensaje;
+    }
+
+    /**
+     * Sets the ultimo ensaje.
+     *
+     * @param ultimo_ensaje
+     *            the new ultimo ensaje
+     */
+    public void setUltimo_mensaje(String ultimo_ensaje) {
+        this.ultimo_mensaje = ultimo_ensaje;
+    }
+
+    /**
+     * Compare to.
+     *
+     * @param chat
+     *            the chat
+     * @return the int
+     */
     @Override
     public int compareTo(ChatResponse chat) {
         return this.fecha_ultimo_mensaje.compareTo(chat.getFecha_ultimo_mensaje());

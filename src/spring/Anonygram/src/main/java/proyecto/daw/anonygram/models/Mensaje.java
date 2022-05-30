@@ -136,6 +136,6 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
 
     @Override
     public int compareTo(Mensaje o) {
-        return o.getTimestamp().compareTo(this.timestamp);
+        return this.getTimestamp().compareTo(o.timestamp);
     }
 }

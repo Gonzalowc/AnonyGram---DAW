@@ -2,13 +2,13 @@ package proyecto.daw.anonygram.webSocket.model;
 
 import java.util.Date;
 
-public class MensajeRequest {
+public class MensajeRequest implements Comparable<MensajeRequest>{
 
     private String mensaje;
 
-    private Integer usuario;
+    private Long id_usuario;
 
-    private Integer chat;
+    private Long id_chat;
 
     private Date timestamp;
 
@@ -18,61 +18,79 @@ public class MensajeRequest {
     }
 
     public MensajeRequest(
-        String message,
-        Integer usuario,
-        Integer chat,
+        String mensaje,
+        Long id_usuario,
+        Long id_chat,
         Date timestamp,
         boolean active) {
-        this.mensaje = message;
-        this.usuario = usuario;
-        this.chat = chat;
+        super();
+        this.mensaje = mensaje;
+        this.id_usuario = id_usuario;
+        this.id_chat = id_chat;
         this.timestamp = timestamp;
         this.active = active;
     }
 
-    public String getMessage() {
+
+
+    
+    public String getMensaje() {
         return mensaje;
     }
 
-    public void setMessage(String message) {
-        this.mensaje = message;
+    
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
-    public Integer getUsuario() {
-        return usuario;
+    
+    public Long getId_usuario() {
+        return id_usuario;
     }
 
-    public void setUsuario(Integer usuario) {
-        this.usuario = usuario;
+    
+    public void setId_usuario(Long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public Integer getChat() {
-        return chat;
+    
+    public Long getId_chat() {
+        return id_chat;
     }
 
-    public void setChat(Integer chat) {
-        this.chat = chat;
+    
+    public void setId_chat(Long id_chat) {
+        this.id_chat = id_chat;
     }
 
+    
     public Date getTimestamp() {
         return timestamp;
     }
 
+    
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 
+    
     public boolean isActive() {
         return active;
     }
 
+    
     public void setActive(boolean active) {
         this.active = active;
     }
 
     @Override
     public String toString() {
-        return "MensajeRequest [mensaje=" + mensaje + ", usuario=" + usuario + ", chat=" + chat + ", timestamp="
+        return "MensajeRequest [mensaje=" + mensaje + ", usuario=" + id_usuario + ", chat=" + id_chat + ", timestamp="
             + timestamp + ", active=" + active + "]";
+    }
+
+    @Override
+    public int compareTo(MensajeRequest o) {
+        return o.timestamp.compareTo(this.timestamp);
     }
 }
