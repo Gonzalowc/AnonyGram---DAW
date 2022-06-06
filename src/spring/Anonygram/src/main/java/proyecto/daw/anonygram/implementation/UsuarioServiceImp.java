@@ -71,4 +71,11 @@ public class UsuarioServiceImp implements UsuarioService {
     public List<Usuario> getAllUsersNewChat() {
         return usuarioRepo.getAllByActiveNewChat(true);
     }
+
+    @Override
+    public List<Usuario> getAllUsers() {
+        return usuarioRepo.findAll();
+    }
+    
+    
 }

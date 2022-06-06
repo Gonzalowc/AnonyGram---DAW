@@ -56,7 +56,7 @@ public class ChatResponse implements Comparable<ChatResponse> {
      */
     public ChatResponse(
         Chat chat) {
-        this.id_chat = chat.getId();
+        this.id_chat = chat.getId_chat();
         this.fecha_creacion = chat.getFechaCreacion().toString();
         this.fecha_ultimo_mensaje = chat.getMensajes().size() > 0 ? new ArrayList<Mensaje>(chat.getMensajes())
             .get(chat.getMensajes().size() - 1).getTimestamp().toString() : new Date().toString();

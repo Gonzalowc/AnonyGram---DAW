@@ -19,5 +19,6 @@ public interface UsuarioService {
 
     public Usuario findByUsuario(String usuario);
 
-    List<Usuario> getAllUsersNewChat();
+    public List<Usuario> getAllUsersNewChat();
+    public List<Usuario> getAllUsers();
 }
