@@ -2,6 +2,8 @@ package proyecto.daw.anonygram.models.response;
 
 /**
  * The Class ChatStadisticsResponse.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 public class ChatStadisticsResponse {
 

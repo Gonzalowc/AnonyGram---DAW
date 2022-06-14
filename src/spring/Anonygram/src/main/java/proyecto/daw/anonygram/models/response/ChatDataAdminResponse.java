@@ -1,12 +1,13 @@
 package proyecto.daw.anonygram.models.response;
 
-import java.sql.Blob;
 import java.util.Date;
 
 import proyecto.daw.anonygram.models.Chat;
 
 /**
  * The Class ChatDataAdminResponse.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 public class ChatDataAdminResponse {
 
@@ -29,7 +30,7 @@ public class ChatDataAdminResponse {
     private Long id_usuario_respuesta;
 
     /** The imagen. */
-    private Blob imagen;
+    private String imagen;
 
     /** The cantidad mensajes. */
     private Long cantidad_mensajes;
@@ -42,8 +43,15 @@ public class ChatDataAdminResponse {
      */
     public ChatDataAdminResponse() {
     }
-    
-    public ChatDataAdminResponse(Chat chat) {
+
+    /**
+     * Instantiates a new chat data admin response.
+     *
+     * @param chat
+     *            the chat
+     */
+    public ChatDataAdminResponse(
+        Chat chat) {
         setActivo(chat.isActivo());
         setCantidad_mensajes(cantidadMensajes(chat));
         setFecha_creacion(chat.getFechaCreacion());
@@ -54,10 +62,18 @@ public class ChatDataAdminResponse {
         setNombre_chat_creador(chat.getNombreChatCreador());
         setNombre_chat_respuesta(chat.getNombreChatRespuesta());
     }
-    
+
+    /**
+     * Cantidad mensajes.
+     *
+     * @param chat
+     *            the chat
+     * @return the long
+     */
     private static Long cantidadMensajes(Chat chat) {
         return Long.valueOf(chat.getMensajes().size());
     }
+
     /**
      * Gets the id chat.
      *
@@ -70,7 +86,8 @@ public class ChatDataAdminResponse {
     /**
      * Sets the id chat.
      *
-     * @param id_chat the new id chat
+     * @param id_chat
+     *            the new id chat
      */
     public void setId_chat(Long id_chat) {
         this.id_chat = id_chat;
@@ -88,7 +105,8 @@ public class ChatDataAdminResponse {
     /**
      * Sets the fecha creacion.
      *
-     * @param fecha_creacion the new fecha creacion
+     * @param fecha_creacion
+     *            the new fecha creacion
      */
     public void setFecha_creacion(Date fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
@@ -106,7 +124,8 @@ public class ChatDataAdminResponse {
     /**
      * Sets the nombre chat creador.
      *
-     * @param nombre_chat_creador the new nombre chat creador
+     * @param nombre_chat_creador
+     *            the new nombre chat creador
      */
     public void setNombre_chat_creador(String nombre_chat_creador) {
         this.nombre_chat_creador = nombre_chat_creador;
@@ -124,7 +143,8 @@ public class ChatDataAdminResponse {
     /**
      * Sets the nombre chat respuesta.
      *
-     * @param nombre_chat_respuesta the new nombre chat respuesta
+     * @param nombre_chat_respuesta
+     *            the new nombre chat respuesta
      */
     public void setNombre_chat_respuesta(String nombre_chat_respuesta) {
         this.nombre_chat_respuesta = nombre_chat_respuesta;
@@ -142,7 +162,8 @@ public class ChatDataAdminResponse {
     /**
      * Sets the id usuario creador.
      *
-     * @param id_usuario_creador the new id usuario creador
+     * @param id_usuario_creador
+     *            the new id usuario creador
      */
     public void setId_usuario_creador(Long id_usuario_creador) {
         this.id_usuario_creador = id_usuario_creador;
@@ -160,7 +181,8 @@ public class ChatDataAdminResponse {
     /**
      * Sets the id usuario respuesta.
      *
-     * @param id_usuario_respuesta the new id usuario respuesta
+     * @param id_usuario_respuesta
+     *            the new id usuario respuesta
      */
     public void setId_usuario_respuesta(Long id_usuario_respuesta) {
         this.id_usuario_respuesta = id_usuario_respuesta;
@@ -171,16 +193,17 @@ public class ChatDataAdminResponse {
      *
      * @return the imagen
      */
-    public Blob getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
     /**
      * Sets the imagen.
      *
-     * @param imagen the new imagen
+     * @param imagen
+     *            the new imagen
      */
-    public void setImagen(Blob imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 
@@ -196,7 +219,8 @@ public class ChatDataAdminResponse {
     /**
      * Sets the cantidad mensajes.
      *
-     * @param cantidad_mensajes the new cantidad mensajes
+     * @param cantidad_mensajes
+     *            the new cantidad mensajes
      */
     public void setCantidad_mensajes(Long cantidad_mensajes) {
         this.cantidad_mensajes = cantidad_mensajes;
@@ -214,7 +238,8 @@ public class ChatDataAdminResponse {
     /**
      * Sets the activo.
      *
-     * @param activo the new activo
+     * @param activo
+     *            the new activo
      */
     public void setActivo(boolean activo) {
         this.activo = activo;

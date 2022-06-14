@@ -28,6 +28,8 @@ import proyecto.daw.anonygram.utils.TemporalEnum;
 
 /**
  * The Class UsuarioController.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 @Controller
 public class UsuarioController {
@@ -63,17 +65,19 @@ public class UsuarioController {
         }
         return null;
     }
-    
+
     /**
      * Gets the user.
      *
-     * @param idUsuario the id usuario
+     * @param idUsuario
+     *            the id usuario
      * @return the user
      */
     @ResponseBody
     @GetMapping(value = "/usuario",
         produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    public ModelRegisterUserResponse getUser(@RequestParam(required = true, name = "idUsuario") Long idUsuario) {
+    public ModelRegisterUserResponse
+        getUser(@RequestParam(required = true, name = "idUsuario") Long idUsuario) {
         Usuario usuario = usuarioService.findByIdUsuario(idUsuario);
         if (usuario != null) {
             ModelRegisterUserResponse response = new ModelRegisterUserResponse();
@@ -246,7 +250,8 @@ public class UsuarioController {
     /**
      * Update usuario.
      *
-     * @param usuarioModify the usuario modify
+     * @param usuarioModify
+     *            the usuario modify
      * @return the model register user response
      */
     @ResponseBody
@@ -275,7 +280,8 @@ public class UsuarioController {
     /**
      * Update search chat.
      *
-     * @param idUsuario the id usuario
+     * @param idUsuario
+     *            the id usuario
      * @return true, if successful
      */
     @ResponseBody
@@ -287,14 +293,17 @@ public class UsuarioController {
         usuarioService.updateUsuario(userDB);
         return true;
     }
-    
+
     /**
      * Update active usuario.
      *
-     * @param idUsuario the id usuario
+     * @param idUsuario
+     *            the id usuario
      * @return true, if successful
      */
-    @ResponseBody @GetMapping(value="/admin/usuario/active",produces={MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    @ResponseBody
+    @GetMapping(value = "/admin/usuario/active",
+        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public boolean updateActiveUsuario(@RequestParam(required = true, name = "idUsuario") Long idUsuario) {
         Usuario userDB = usuarioService.findByIdUsuario(idUsuario);
         userDB.setActivo(!userDB.isActivo());

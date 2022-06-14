@@ -21,6 +21,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 /**
  * The Class Usuario.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 @Entity
 @Table(name = "usuario")

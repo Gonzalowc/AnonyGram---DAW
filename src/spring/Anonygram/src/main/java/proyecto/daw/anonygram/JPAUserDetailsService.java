@@ -9,12 +9,27 @@ import org.springframework.stereotype.Service;
 import proyecto.daw.anonygram.implementation.UsuarioServiceImp;
 import proyecto.daw.anonygram.models.Usuario;
 
+/**
+ * The Class JPAUserDetailsService.
+ * 
+ * @author Gonzalo Waack Carneado
+ */
 @Service
 public class JPAUserDetailsService implements UserDetailsService {
 
+    /** The usuario service. */
     @Autowired
     UsuarioServiceImp usuarioService;
 
+    /**
+     * Load user by username.
+     *
+     * @param usuario
+     *            the usuario
+     * @return the user details
+     * @throws UsernameNotFoundException
+     *             the username not found exception
+     */
     @Override
     public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
         // Obtengo el usuario

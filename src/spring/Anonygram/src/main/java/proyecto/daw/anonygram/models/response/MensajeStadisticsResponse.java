@@ -2,11 +2,16 @@ package proyecto.daw.anonygram.models.response;
 
 /**
  * The Class MensajeStadisticsResponse.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 public class MensajeStadisticsResponse {
 
     /** The mensajes totales. */
     private int mensajes_totales;
+
+    /** The mensajes reportados. */
+    private int mensajes_reportados;
 
     /** The mensajes activos. */
     private int mensajes_activos;
@@ -16,8 +21,6 @@ public class MensajeStadisticsResponse {
 
     /** The mensajes hoy. */
     private int mensajes_hoy;
-    
-    
 
     /**
      * Instantiates a new mensaje stadistics response.
@@ -28,8 +31,6 @@ public class MensajeStadisticsResponse {
     /**
      * Instantiates a new mensaje stadistics response.
      *
-     * @param usuario_mas_mensajes
-     *            the usuario mas mensajes
      * @param mensajes_totales
      *            the mensajes totales
      * @param mensajes_activos
@@ -124,5 +125,24 @@ public class MensajeStadisticsResponse {
      */
     public void setMensajes_hoy(int mensajes_hoy) {
         this.mensajes_hoy = mensajes_hoy;
+    }
+
+    /**
+     * Gets the mensajes reportados.
+     *
+     * @return the mensajes reportados
+     */
+    public int getMensajes_reportados() {
+        return mensajes_reportados;
+    }
+
+    /**
+     * Sets the mensajes reportados.
+     *
+     * @param mensajes_reportados
+     *            the new mensajes reportados
+     */
+    public void setMensajes_reportados(int mensajes_reportados) {
+        this.mensajes_reportados = mensajes_reportados;
     }
 }

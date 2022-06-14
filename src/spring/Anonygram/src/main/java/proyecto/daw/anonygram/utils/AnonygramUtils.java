@@ -8,6 +8,8 @@ import java.util.Random;
 
 /**
  * The Class AnonygramUtils.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 public class AnonygramUtils {
 

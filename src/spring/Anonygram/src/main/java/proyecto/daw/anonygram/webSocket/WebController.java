@@ -26,19 +26,36 @@ import proyecto.daw.anonygram.utils.AnonygramUtils;
 import proyecto.daw.anonygram.webSocket.model.ChatResponse;
 import proyecto.daw.anonygram.webSocket.model.MensajeResponse;
 
+/**
+ * The Class WebController.
+ * 
+ * @author Gonzalo Waack Carneado
+ */
 @Transactional
 @Controller
 public class WebController {
 
+    /** The mensaje sevice. */
     @Autowired
     MensajeServiceImp mensajeSevice;
 
+    /** The usuario service. */
     @Autowired
     UsuarioServiceImp usuarioService;
 
+    /** The chat service. */
     @Autowired
     ChatServiceImp chatService;
 
+    /**
+     * Greeting.
+     *
+     * @param mensaje
+     *            the mensaje
+     * @return the mensaje response
+     * @throws Exception
+     *             the exception
+     */
     @MessageMapping("hello")
     @SendTo("/topic/hi")
     public MensajeResponse greeting(String mensaje) throws Exception {
@@ -52,25 +69,34 @@ public class WebController {
                 Usuario usuario = getUsuario(idUsuario);
                 Chat chat = getChat(idChat);
                 if (chat != null && usuario != null) {
-                    MensajeResponse response = new MensajeResponse(mensajeRequest, idUsuario, idChat,
-                        mensajeObject.getString("timestamp"), mensajeObject.getBoolean("active"));
-                    System.out.println(new Date());
-                    Mensaje mensajeDB = new Mensaje(response.getMensaje(), usuario, chat, new Date(),
-                        response.isActive());
-                    System.out.println("Mensaje creado");
-                    System.out.println("Mensaje enviado a insertar");
-                    mensajeSevice.insertMensaje(mensajeDB);
-                    return response;
+                    Mensaje mensajeDB = new Mensaje(mensajeRequest, usuario, chat, new Date(),
+                        mensajeObject.getBoolean("active"), false);
+                    mensajeDB = mensajeSevice.insertMensaje(mensajeDB);
+                    return new MensajeResponse(mensajeDB);
                 }
             }
         }
         return null;
     }
 
+    /**
+     * Gets the usuario.
+     *
+     * @param idUsuario
+     *            the id usuario
+     * @return the usuario
+     */
     private Usuario getUsuario(Long idUsuario) {
         return idUsuario != null ? usuarioService.findByIdUsuario(idUsuario) : null;
     }
 
+    /**
+     * Gets the chat.
+     *
+     * @param idChat
+     *            the id chat
+     * @return the chat
+     */
     private Chat getChat(Long idChat) {
         try {
             return idChat != null ? chatService.findByIdChat(idChat) : null;
@@ -79,6 +105,13 @@ public class WebController {
         }
     }
 
+    /**
+     * Checks if is object JSO ngood format.
+     *
+     * @param mensaje
+     *            the mensaje
+     * @return true, if is object JSO ngood format
+     */
     private boolean isObjectJSONgoodFormat(JSONObject mensaje) {
         try {
             mensaje.getLong("id_usuario");
@@ -92,6 +125,15 @@ public class WebController {
         }
     }
 
+    /**
+     * New chat.
+     *
+     * @param mensaje
+     *            the mensaje
+     * @return the chat response
+     * @throws Exception
+     *             the exception
+     */
     @MessageMapping("newChat")
     @SendTo("/topic/newChat")
     public ChatResponse newChat(String mensaje) throws Exception {
@@ -128,6 +170,13 @@ public class WebController {
         return null;
     }
 
+    /**
+     * Have new peope to chat.
+     *
+     * @param usuario
+     *            the usuario
+     * @return the list
+     */
     private List<Usuario> haveNewPeopeToChat(Usuario usuario) {
         List<Usuario> usuariosNuevoChat = usuarioService.getAllUsersNewChat();
         if (usuariosNuevoChat != null && usuariosNuevoChat.size() > 0) {
@@ -146,6 +195,13 @@ public class WebController {
         return usuariosNuevoChat;
     }
 
+    /**
+     * Users not chat.
+     *
+     * @param usuario
+     *            the usuario
+     * @return the list
+     */
     private List<Usuario> usersNotChat(Usuario usuario) {
         List<Usuario> otherUsers = new ArrayList<>();
         for (Chat c : usuario.getChatsCreados()) {
@@ -157,6 +213,15 @@ public class WebController {
         return new ArrayList<>(new HashSet<>(otherUsers));
     }
 
+    /**
+     * Update users no new chat.
+     *
+     * @param usuarioCreador
+     *            the usuario creador
+     * @param usuarioRespuesta
+     *            the usuario respuesta
+     * @return true, if successful
+     */
     private boolean updateUsersNoNewChat(Usuario usuarioCreador, Usuario usuarioRespuesta) {
         usuarioCreador.setActiveNewChat(false);
         usuarioRespuesta.setActiveNewChat(false);

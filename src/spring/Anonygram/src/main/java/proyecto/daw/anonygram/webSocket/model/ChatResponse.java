@@ -1,13 +1,11 @@
 package proyecto.daw.anonygram.webSocket.model;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 
 import proyecto.daw.anonygram.models.Chat;
 import proyecto.daw.anonygram.models.Mensaje;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ChatResponse.
  *
@@ -37,10 +35,13 @@ public class ChatResponse implements Comparable<ChatResponse> {
     private Long id_usuario_respuesta;
 
     /** The imagen. */
-    private Blob imagen;
+    private String imagen;
 
     /** The ultimo ensaje. */
     private String ultimo_mensaje;
+
+    /** The activo. */
+    private boolean activo;
 
     /**
      * Instantiates a new chat response.
@@ -64,6 +65,7 @@ public class ChatResponse implements Comparable<ChatResponse> {
         this.nombre_chat_respuesta = chat.getNombreChatRespuesta();
         this.id_usuario_creador = chat.getUsuarioCreador().getId();
         this.id_usuario_respuesta = chat.getUsuarioRespuesta().getId();
+        this.activo = chat.isActivo();
     }
 
     /**
@@ -204,7 +206,7 @@ public class ChatResponse implements Comparable<ChatResponse> {
      *
      * @return the imagen
      */
-    public Blob getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
@@ -214,7 +216,7 @@ public class ChatResponse implements Comparable<ChatResponse> {
      * @param blob
      *            the new imagen
      */
-    public void setImagen(Blob blob) {
+    public void setImagen(String blob) {
         this.imagen = blob;
     }
 
@@ -235,6 +237,25 @@ public class ChatResponse implements Comparable<ChatResponse> {
      */
     public void setUltimo_mensaje(String ultimo_ensaje) {
         this.ultimo_mensaje = ultimo_ensaje;
+    }
+
+    /**
+     * Checks if is activo.
+     *
+     * @return true, if is activo
+     */
+    public boolean isActivo() {
+        return activo;
+    }
+
+    /**
+     * Sets the activo.
+     *
+     * @param activo
+     *            the new activo
+     */
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     /**

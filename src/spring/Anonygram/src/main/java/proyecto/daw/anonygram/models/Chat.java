@@ -1,7 +1,6 @@
 package proyecto.daw.anonygram.models;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -24,6 +23,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 /**
  * The Class Chat.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 @Entity
 @Table(name = "chat")
@@ -71,7 +72,7 @@ public class Chat implements Serializable {
 
     /** The imagen. */
     @Column(nullable = true)
-    private Blob imagen;
+    private String imagen;
 
     /**
      * Instantiates a new chat.
@@ -291,7 +292,7 @@ public class Chat implements Serializable {
      *
      * @return the imagen
      */
-    public Blob getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
@@ -301,7 +302,7 @@ public class Chat implements Serializable {
      * @param imagen
      *            the new imagen
      */
-    public void setImagen(Blob imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 

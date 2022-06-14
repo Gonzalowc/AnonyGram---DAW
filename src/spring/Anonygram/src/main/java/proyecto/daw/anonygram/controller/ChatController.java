@@ -85,7 +85,7 @@ public class ChatController {
             response.setId_chat(chat.getId_chat());
             if (mensajes.size() > 0) {
                 response.setFecha_ultimo_mensaje(mensajes.get(mensajes.size() - 1).getTimestamp() + "");
-                response.setUltimo_mensaje(mensajes.get(mensajes.size() - 1).getMessage());
+                response.setUltimo_mensaje(mensajes.get(mensajes.size() - 1).getMensaje());
             }
             response.setFecha_creacion(chat.getFechaCreacion() + "");
             response.setNombre_chat_creador(chat.getNombreChatCreador());
@@ -93,6 +93,7 @@ public class ChatController {
             response.setId_usuario_creador(chat.getUsuarioCreador().getId());
             response.setId_usuario_respuesta(chat.getUsuarioRespuesta().getId());
             response.setImagen(chat.getImagen());
+            response.setActivo(chat.isActivo());
             listResponse.add(response);
         }
         return listResponse;
@@ -235,10 +236,29 @@ public class ChatController {
     @PostMapping(value = "/admin/chat/update",
         consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
         produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    public ChatDataAdminResponse updateChat(@RequestBody Chat chatUpdate) {
+    public ChatDataAdminResponse updateChat(@RequestBody ChatDataAdminResponse chatUpdate) {
         Chat chat = chatService.findByIdChat(chatUpdate.getId_chat());
-        chat.setNombreChatCreador(chatUpdate.getNombreChatCreador());
-        chat.setNombreChatRespuesta(chatUpdate.getNombreChatRespuesta());
-        return new ChatDataAdminResponse(chat);
+        System.out.println(chatUpdate.getNombre_chat_creador());
+        System.out.println(chatUpdate.getNombre_chat_respuesta());
+        chat.setNombreChatCreador(chatUpdate.getNombre_chat_creador());
+        chat.setNombreChatRespuesta(chatUpdate.getNombre_chat_respuesta());
+        return new ChatDataAdminResponse(chatService.updateChat(chat));
+    }
+
+    /**
+     * Update active chat.
+     *
+     * @param idChat
+     *            the id chat
+     * @return true, if successful
+     */
+    @ResponseBody
+    @GetMapping(value = "/admin/chat/active",
+        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    public boolean updateActiveChat(@RequestParam(required = true, name = "idChat") Long idChat) {
+        Chat chatDB = chatService.findByIdChat(idChat);
+        chatDB.setActivo(!chatDB.isActivo());
+        chatService.updateChat(chatDB);
+        return true;
     }
 }

@@ -15,10 +15,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * ACCEDER MÉTODO DE ENCRIPTACIÓN DE LAS CONTRASEÑAS
  */
 
+/**
+ * The Class SecurityConfiguration.
+ * 
+ * @author Gonzalo Waack Carneado
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    /** The user details service. */
     /*
      * Obtengo una refencia al SINGLENTON del
      * userDetailsService *
@@ -26,6 +32,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     JPAUserDetailsService userDetailsService;
 
+    /**
+     * Configure.
+     *
+     * @param auth
+     *            the auth
+     * @throws Exception
+     *             the exception
+     */
     /* MÉTODO PARA AUTENTIFICAR LOS USUARIOS */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -37,6 +51,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService);
     }
 
+    /**
+     * Configure.
+     *
+     * @param http
+     *            the http
+     * @throws Exception
+     *             the exception
+     */
     /*
      * MÉTODO PARA ESTABLECER AUTORIZACION - A QUÉ PUEDO
      * ACCEDER
@@ -48,11 +70,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
          * https://www.baeldung.com/spring-security-
          * expressions
          */
-        http.csrf().disable().authorizeRequests()
-            .antMatchers("/usuario","/usuario/**", "/gkz-stomp-endpoint/**", "/chat/**","/mensaje/**","/admin/**").not().authenticated().anyRequest()
+        http.csrf().disable().authorizeRequests().antMatchers("/usuario", "/usuario/**",
+            "/gkz-stomp-endpoint/**", "/chat/**", "/mensaje/**", "/admin/**").not().authenticated().anyRequest()
             .authenticated().and().httpBasic();
     }
 
+    /**
+     * Gets the password encoder.
+     *
+     * @return the password encoder
+     */
     /*
      * ESTABLECEMOS EL PASSWORD ENCODER. FUERZA 15 (de 4 a
      * 31)

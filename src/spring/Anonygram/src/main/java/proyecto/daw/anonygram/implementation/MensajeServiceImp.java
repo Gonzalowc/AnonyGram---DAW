@@ -9,9 +9,10 @@ import proyecto.daw.anonygram.models.Mensaje;
 import proyecto.daw.anonygram.repository.MensajeRepository;
 import proyecto.daw.anonygram.service.MessageService;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MensajeServiceImp.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 @Service
 public class MensajeServiceImp implements MessageService {
@@ -19,7 +20,7 @@ public class MensajeServiceImp implements MessageService {
     /** The message repo. */
     @Autowired
     MensajeRepository messageRepo;
-    
+
     /**
      * Instantiates a new mensaje service imp.
      */
@@ -29,7 +30,8 @@ public class MensajeServiceImp implements MessageService {
     /**
      * Insert mensaje.
      *
-     * @param mensaje the mensaje
+     * @param mensaje
+     *            the mensaje
      * @return the mensaje
      */
     @Override
@@ -51,7 +53,47 @@ public class MensajeServiceImp implements MessageService {
         return messageRepo.findAll();
     }
 
-    
-    
-    
+    /**
+     * Gets the all by reported.
+     *
+     * @param reported
+     *            the reported
+     * @param activo
+     *            the activo
+     * @return the all by reported
+     */
+    @Override
+    public List<Mensaje> getAllByReported(boolean reported, boolean activo) {
+        return messageRepo.getAllByReportedAndActive(reported, activo);
+    }
+
+    /**
+     * Update mensaje.
+     *
+     * @param mensaje
+     *            the mensaje
+     * @return the mensaje
+     */
+    @Override
+    public Mensaje updateMensaje(Mensaje mensaje) {
+        if (mensaje.getId() != null) {
+            return messageRepo.save(mensaje);
+        }
+        return null;
+    }
+
+    /**
+     * Find by id mensaje.
+     *
+     * @param mensaje
+     *            the mensaje
+     * @return the mensaje
+     */
+    @Override
+    public Mensaje findByIdMensaje(Long mensaje) {
+        if (mensaje != null) {
+            return messageRepo.getById(mensaje);
+        }
+        return null;
+    }
 }

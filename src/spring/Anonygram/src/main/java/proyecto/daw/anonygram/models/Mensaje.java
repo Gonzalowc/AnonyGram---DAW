@@ -19,10 +19,12 @@ import org.hibernate.annotations.CreationTimestamp;
 
 /**
  * The Class Mensaje.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 @Entity
 @Table(name = "mensaje")
-public class Mensaje implements Serializable,Comparable<Mensaje> {
+public class Mensaje implements Serializable, Comparable<Mensaje> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 904186107637100858L;
@@ -33,7 +35,7 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
     private Long id_mensaje;
 
     /** The mensaje. */
-    @Column(nullable = false, length =10000)
+    @Column(nullable = false, length = 10000)
     private String mensaje;
 
     /** The usuario. */
@@ -56,6 +58,10 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
     @Column(nullable = false, columnDefinition = "BOOLEAN")
     private boolean active = true;
 
+    /** The reported. */
+    @Column(nullable = false, columnDefinition = "BOOLEAN")
+    private boolean reported = false;
+
     /**
      * Instantiates a new mensaje.
      */
@@ -65,12 +71,20 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
     /**
      * Instantiates a new mensaje.
      *
-     * @param id the id
-     * @param message the message
-     * @param usuario the usuario
-     * @param chat the chat
-     * @param timestamp the timestamp
-     * @param active the active
+     * @param id
+     *            the id
+     * @param message
+     *            the message
+     * @param usuario
+     *            the usuario
+     * @param chat
+     *            the chat
+     * @param timestamp
+     *            the timestamp
+     * @param active
+     *            the active
+     * @param reported
+     *            the reported
      */
     public Mensaje(
         Long id,
@@ -78,31 +92,41 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
         Usuario usuario,
         Chat chat,
         Date timestamp,
-        boolean active) {
-        this(message, usuario, chat, timestamp, active);
+        boolean active,
+        boolean reported) {
+        this(message, usuario, chat, timestamp, active, reported);
         this.id_mensaje = id;
     }
 
     /**
      * Instantiates a new mensaje.
      *
-     * @param message the message
-     * @param usuario the usuario
-     * @param chat the chat
-     * @param timestamp the timestamp
-     * @param active the active
+     * @param message
+     *            the message
+     * @param usuario
+     *            the usuario
+     * @param chat
+     *            the chat
+     * @param timestamp
+     *            the timestamp
+     * @param active
+     *            the active
+     * @param reported
+     *            the reported
      */
     public Mensaje(
         String message,
         Usuario usuario,
         Chat chat,
         Date timestamp,
-        boolean active) {
+        boolean active,
+        boolean reported) {
         this.mensaje = message;
         this.usuario = usuario;
         this.chat = chat;
         this.timestamp = timestamp;
         this.active = active;
+        this.reported = reported;
     }
 
     /**
@@ -115,21 +139,22 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
     }
 
     /**
-     * Gets the message.
+     * Gets the id mensaje.
      *
-     * @return the message
+     * @return the id mensaje
      */
-    public String getMessage() {
-        return mensaje;
+    public Long getId_mensaje() {
+        return id_mensaje;
     }
 
     /**
-     * Sets the message.
+     * Sets the id mensaje.
      *
-     * @param message the new message
+     * @param id_mensaje
+     *            the new id mensaje
      */
-    public void setMessage(String message) {
-        this.mensaje = message;
+    public void setId_mensaje(Long id_mensaje) {
+        this.id_mensaje = id_mensaje;
     }
 
     /**
@@ -144,7 +169,8 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
     /**
      * Sets the usuario.
      *
-     * @param usuario the new usuario
+     * @param usuario
+     *            the new usuario
      */
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
@@ -162,7 +188,8 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
     /**
      * Sets the chat.
      *
-     * @param chat the new chat
+     * @param chat
+     *            the new chat
      */
     public void setChat(Chat chat) {
         this.chat = chat;
@@ -180,7 +207,8 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
     /**
      * Sets the timestamp.
      *
-     * @param timestamp the new timestamp
+     * @param timestamp
+     *            the new timestamp
      */
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
@@ -198,10 +226,49 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
     /**
      * Sets the active.
      *
-     * @param active the new active
+     * @param active
+     *            the new active
      */
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    /**
+     * Gets the mensaje.
+     *
+     * @return the mensaje
+     */
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    /**
+     * Sets the mensaje.
+     *
+     * @param mensaje
+     *            the new mensaje
+     */
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    /**
+     * Checks if is reported.
+     *
+     * @return true, if is reported
+     */
+    public boolean isReported() {
+        return reported;
+    }
+
+    /**
+     * Sets the reported.
+     *
+     * @param reported
+     *            the new reported
+     */
+    public void setReported(boolean reported) {
+        this.reported = reported;
     }
 
     /**
@@ -217,7 +284,8 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
     /**
      * Equals.
      *
-     * @param obj the obj
+     * @param obj
+     *            the obj
      * @return true, if successful
      */
     @Override
@@ -239,14 +307,15 @@ public class Mensaje implements Serializable,Comparable<Mensaje> {
      */
     @Override
     public String toString() {
-        return "Message [id=" + id_mensaje + ", mensaje=" + mensaje + ", usuario=" + usuario + ", chat=" + chat
-            + ", timestamp=" + timestamp + ", active=" + active + "]";
+        return "Mensaje [id_mensaje=" + id_mensaje + ", mensaje=" + mensaje + ", timestamp=" + timestamp
+            + ", active=" + active + ", reported=" + reported + "]";
     }
 
     /**
      * Compare to.
      *
-     * @param o the o
+     * @param o
+     *            the o
      * @return the int
      */
     @Override

@@ -4,6 +4,8 @@ import java.util.Date;
 
 /**
  * The Class ModelRegisterUserResponse.
+ * 
+ * @author Gonzalo Waack Carneado
  */
 public class ModelRegisterUserResponse {
 
